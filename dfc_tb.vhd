@@ -20,7 +20,7 @@ architecture testbench of dfc_tb is
     
     -- signals declaration
     signal clk_tb : std_logic := '0';
-    signal rst_tb : std_logic := '0';
+    signal rst_tb : std_logic := '1';
     signal stop_simulation : std_logic := '1';
     signal d_tb : std_logic;
     signal q_tb : std_logic;
@@ -33,9 +33,9 @@ architecture testbench of dfc_tb is
         
         test_dfc: dfc
             port map(
-                d => d_tb;
-                q => q_tb;
-                clk => clk_tb;
+                d => d_tb,
+                q => q_tb,
+                clk => clk_tb,
                 rst => rst_tb
             );
             
@@ -47,12 +47,12 @@ architecture testbench of dfc_tb is
                     case t is
                         when 0 => d_tb <= '0';
                         when 1 => d_tb <= '1';
-                        when 2 => rst_tb <= '1'; d_tb <= '0';
+                        when 2 => d_tb <= '0';
                         when 3 => d_tb <= '1';
                         when 4 => d_tb <= '0';
                         when 5 => d_tb <= '1';
                         
-                        when others => null
+                        when others => null;
                         
                     end case;
                     
