@@ -1,0 +1,60 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity lfsr_tb is
+end lfsr_tb;
+
+architecture testbench of lfsr_tb is
+    component lfsr is
+        generic(N_bit : integer);
+        port(
+            init : in std_logic_vector(N_bit - 1 downto 0);
+            output : out std_logic_vector(N_bit - 1 downto 0);
+            clk : in std_logic;
+            rst : in std_logic
+        );
+    end component;
+    
+    -- constant declaration
+    constant T_CLK : time := 100 ns;
+    constant T_SIM  : time := 1000 ns;
+    
+    -- signals declaration
+    signal clk_tb : std_logic := '0';
+    signal rst_tb : std_logic := '1';
+    signal stop_simulation : std_logic := '1';
+    signal init_tb : std_logic_vector(N_bit - 1 downto 0);
+    signal output_tb : std_logic_vector(N_bit - 1 downto 0);
+    
+    begin
+        -- clk variation
+        clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK / 2;
+        -- end simulation
+        stop_simulation <= '0' after T_SIM;
+        
+        test_lfsr: lfsr
+            generic map(N_bit => 16)
+            port map(
+                init => init_tb,
+                output => output_tb,
+                clk => clk_tb,
+                rst => rst_tb
+            );
+            
+        input_process: process(clk_tb, rst_tb)
+            variable t : natural := 0;
+            
+            begin
+                if(rising_edge(clk_tb) ) then
+                    case t is
+                        when 0 => init_tb <= "1010110011100001";
+                        
+                        when others => null;
+                        
+                    end case;
+                    
+                    -- incrementing t
+                    t := t+1;
+                end if;
+        end process;
+    end testbench;
