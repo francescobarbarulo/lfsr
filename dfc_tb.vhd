@@ -27,7 +27,7 @@ architecture testbench of dfc_tb is
     
     begin
         -- clk variation
-	    clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK / 2;
+        clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK / 2;
         -- end simulation
         stop_simulation <= '0' after T_SIM;
         
