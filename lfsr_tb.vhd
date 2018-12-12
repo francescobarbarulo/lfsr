@@ -17,11 +17,12 @@ architecture testbench of lfsr_tb is
     
     -- constant declaration
     constant T_CLK : time := 100 ns;
-    constant T_SIM  : time := 1000 ns;
+    constant T_SIM  : time := 10000 ns;
+    constant N_bit : integer := 16;
     
     -- signals declaration
     signal clk_tb : std_logic := '0';
-    signal rst_tb : std_logic := '1';
+    signal rst_tb : std_logic := '0';
     signal stop_simulation : std_logic := '1';
     signal init_tb : std_logic_vector(N_bit - 1 downto 0);
     signal output_tb : std_logic_vector(N_bit - 1 downto 0);
@@ -48,6 +49,7 @@ architecture testbench of lfsr_tb is
                 if(rising_edge(clk_tb) ) then
                     case t is
                         when 0 => init_tb <= "1010110011100001";
+			when 1 => rst_tb <= '1';
                         
                         when others => null;
                         
