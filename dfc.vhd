@@ -14,7 +14,9 @@ architecture bhv of dfc is
     begin
         dfc_process: process(clk, rst)
             begin
-                if (rising_edge(clk) and rst = '1') then
+                if (rst = '0') then
+                    q <= '0';
+                elsif (rising_edge(clk)) then
                     q <= d;
                 end if;
         end process;
