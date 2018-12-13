@@ -12,7 +12,7 @@ end mux;
 
 architecture bhv of mux is
 begin
-    mux_p: process(sel)
+    mux_p: process(a, b, sel)
     begin
         if sel = '0' then
             o <= a;

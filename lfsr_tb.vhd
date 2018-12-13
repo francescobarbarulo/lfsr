@@ -27,7 +27,7 @@ architecture testbench of lfsr_tb is
     signal stop_simulation : std_logic := '1';
     signal init_tb : std_logic_vector(N_bit - 1 downto 0);
     signal output_tb : std_logic_vector(N_bit - 1 downto 0);
-    signal sel_tb : std_logic := '1';
+    signal sel_tb : std_logic := '0';
     
     begin
         -- clk variation
@@ -52,7 +52,7 @@ architecture testbench of lfsr_tb is
                 if(rising_edge(clk_tb) ) then
                     case t is
                         when 0 => init_tb <= "1010110011100001";
-			when 1 => rst_tb <= '1'; sel_tb <= '0';
+			when 1 => rst_tb <= '1';
 			when 3 => sel_tb <= '1';
                         when others => null;
                         

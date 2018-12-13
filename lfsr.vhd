@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity lfsr is
-    generic(N_bit : integer);
+    generic(N_bit : integer := 16);
     port(
         init : in std_logic_vector(N_bit - 1 downto 0);
         sel : in std_logic;
