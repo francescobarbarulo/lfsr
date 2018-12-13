@@ -21,15 +21,24 @@ architecture struct of lfsr is
             rst : in std_logic
         );
     end component dfc;
+
+    component mux
+	port(
+	    a : in std_logic;
+	    b : in std_logic;
+	    sel : in std_logic;
+	    o : out std_logic
+	);
+    end component;
     
     -- signals
     signal state : std_logic_vector(N_bit downto 0);
-    signal o_mux_int : std_logic(N_bit -1 downto 0);
+    signal o_mux_int : std_logic_vector(N_bit - 1 downto 0);
     
     begin
     	-- generation of N instances of the dfc
     	dfc_mux_N_gen: for i in 0 to N_bit - 1  generate
-            i_mux : mux port map(
+                i_mux : mux port map(
                                 a => init(i),
                                 b => state(i),
                                 sel => sel,

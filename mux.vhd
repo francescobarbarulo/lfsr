@@ -11,10 +11,13 @@ entity mux is
 end mux;
 
 architecture bhv of mux is
+begin
+    mux_p: process(sel)
     begin
-        if (sel = '0') then
+        if sel = '0' then
             o <= a;
-        elsif
+        else
             o <= b;
         end if;
+end process mux_p;
 end bhv;

@@ -9,6 +9,7 @@ architecture testbench of lfsr_tb is
         generic(N_bit : integer);
         port(
             init : in std_logic_vector(N_bit - 1 downto 0);
+	    sel : in std_logic;
             output : out std_logic_vector(N_bit - 1 downto 0);
             clk : in std_logic;
             rst : in std_logic
@@ -26,6 +27,7 @@ architecture testbench of lfsr_tb is
     signal stop_simulation : std_logic := '1';
     signal init_tb : std_logic_vector(N_bit - 1 downto 0);
     signal output_tb : std_logic_vector(N_bit - 1 downto 0);
+    signal sel_tb : std_logic := '1';
     
     begin
         -- clk variation
@@ -37,6 +39,7 @@ architecture testbench of lfsr_tb is
             generic map(N_bit => 16)
             port map(
                 init => init_tb,
+		sel => sel_tb,
                 output => output_tb,
                 clk => clk_tb,
                 rst => rst_tb
@@ -49,8 +52,8 @@ architecture testbench of lfsr_tb is
                 if(rising_edge(clk_tb) ) then
                     case t is
                         when 0 => init_tb <= "1010110011100001";
-			when 1 => rst_tb <= '1';
-                        
+			when 1 => rst_tb <= '1'; sel_tb <= '0';
+			when 3 => sel_tb <= '1';
                         when others => null;
                         
                     end case;
