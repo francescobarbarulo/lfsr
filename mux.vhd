@@ -12,12 +12,5 @@ end mux;
 
 architecture bhv of mux is
 begin
-    mux_p: process(a, b, sel)
-    begin
-        if sel = '0' then
-            o <= a;
-        else
-            o <= b;
-        end if;
-end process mux_p;
+    o <= (a and not sel) or (b and sel);
 end bhv;

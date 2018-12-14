@@ -53,7 +53,7 @@ architecture testbench of lfsr_tb is
                     case t is
                         when 0 => init_tb <= "1010110011100001";
 			when 1 => rst_tb <= '1';
-			when 3 => sel_tb <= '1';
+			when 2 => sel_tb <= '1';
                         when others => null;
                         
                     end case;

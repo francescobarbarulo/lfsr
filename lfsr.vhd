@@ -37,7 +37,7 @@ architecture struct of lfsr is
     
     begin
     	-- generation of N instances of the dfc
-    	dfc_mux_N_gen: for i in 0 to N_bit - 1  generate
+    	dfc_mux_N_gen: for i in 0 to N_bit - 1 generate
                 i_mux : mux port map(
                                 a => init(i),
                                 b => state(i),
@@ -52,7 +52,7 @@ architecture struct of lfsr is
                         	);
     	end generate;
 
-    output(N_bit - 1 downto 0) <= state(N_bit downto 1);
+    output(N_bit - 1 downto 0) <= state(N_bit - 1 downto 0);
     state(0) <= state(16) xor state(14) xor state(13) xor state(11);
     
 end struct;
