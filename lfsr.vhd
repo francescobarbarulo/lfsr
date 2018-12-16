@@ -31,7 +31,7 @@ architecture struct of lfsr is
     	-- generation of N instances of the dfc
     	dff_en_N_gen: for i in 0 to N_bit - 1 generate
         	i_dff_en: dff_en port map(
-                                a => lfsr_i(i);
+                                a => lfsr_i(i),
                             	d => state(i),
                             	q => state(i + 1),
                                 en => en,
@@ -40,7 +40,7 @@ architecture struct of lfsr is
                         	);
     	end generate;
 
-    lfsr_o(N_bit - 1 downto 0) <= state(N_bit - 1 downto 0);
+    lfsr_o(N_bit - 1 downto 0) <= state(N_bit downto 1);
     state(0) <= state(16) xor state(14) xor state(13) xor state(11);
     
 end struct;

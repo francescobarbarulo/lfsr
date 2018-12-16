@@ -18,7 +18,7 @@ architecture testbench of lfsr_tb is
     
     -- constant declaration
     constant T_CLK : time := 100 ns;
-    constant T_SIM  : time := 10000 ns;
+    constant T_SIM  : time := 1000 ns;
     constant N_bit : integer := 16;
     
     -- signals declaration
@@ -53,7 +53,7 @@ architecture testbench of lfsr_tb is
                     case t is
                         when 0 => lfsr_i_tb <= "1010110011100001";
 			            when 1 => rst_n_tb <= '1';
-			            when 2 => en_tb <= '1';
+			            when 5 => en_tb <= '1';
                         when others => null;
                         
                     end case;

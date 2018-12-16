@@ -25,7 +25,7 @@ architecture testbench of dff_en_tb is
     signal rst_n_tb : std_logic := '1';
     signal stop_simulation : std_logic := '1';
     signal a_tb : std_logic := '0';
-    signal d_tb : std_logic;
+    signal d_tb : std_logic := '1';
     signal q_tb : std_logic;
     signal en_tb : std_logic := '0';
     
@@ -51,13 +51,13 @@ architecture testbench of dff_en_tb is
             begin
                 if(rising_edge(clk_tb)) then
                     case t is
-                        when 0 => en_tb <= '1';
-                        when 1 => d_tb <= '0';
-                        when 2 => d_tb <= '1';
-                        when 3 => d_tb <= '0';
-                        when 4 => d_tb <= '1';
-                        when 5 => d_tb <= '0';
-                        when 6 => d_tb <= '1';
+                        when 1 => en_tb <= '1';
+                        when 2 => d_tb <= '0';
+                        when 3 => d_tb <= '1';
+                        when 4 => d_tb <= '0';
+                        when 5 => d_tb <= '1';
+                        when 6 => d_tb <= '0';
+                        when 7 => d_tb <= '1';
                         
                         when others => null;
                         
