@@ -8,11 +8,11 @@ architecture testbench of lfsr_tb is
     component lfsr is
         generic(N_bit : integer);
         port(
-            init : in std_logic_vector(N_bit - 1 downto 0);
-	    sel : in std_logic;
-            output : out std_logic_vector(N_bit - 1 downto 0);
+            lfsr_i : in std_logic_vector(N_bit - 1 downto 0);
+            lfsr_o : out std_logic_vector(N_bit - 1 downto 0);
+            en : in std_logic;
             clk : in std_logic;
-            rst : in std_logic
+            rst_n : in std_logic
         );
     end component;
     
@@ -23,11 +23,11 @@ architecture testbench of lfsr_tb is
     
     -- signals declaration
     signal clk_tb : std_logic := '0';
-    signal rst_tb : std_logic := '0';
+    signal rst_n_tb : std_logic := '0';
     signal stop_simulation : std_logic := '1';
-    signal init_tb : std_logic_vector(N_bit - 1 downto 0);
-    signal output_tb : std_logic_vector(N_bit - 1 downto 0);
-    signal sel_tb : std_logic := '0';
+    signal lfsr_i_tb : std_logic_vector(N_bit - 1 downto 0);
+    signal lfsr_o_tb : std_logic_vector(N_bit - 1 downto 0);
+    signal en_tb : std_logic := '0';
     
     begin
         -- clk variation
@@ -38,22 +38,22 @@ architecture testbench of lfsr_tb is
         test_lfsr: lfsr
             generic map(N_bit => 16)
             port map(
-                init => init_tb,
-		sel => sel_tb,
-                output => output_tb,
+                lfsr_i => lfsr_i_tb,
+                lfsr_o => lfsr_o_tb,
+		        en => en_tb,
                 clk => clk_tb,
-                rst => rst_tb
+                rst_n => rst_n_tb
             );
             
-        input_process: process(clk_tb, rst_tb)
+        input_process: process(clk_tb, rst_n_tb)
             variable t : natural := 0;
             
             begin
                 if(rising_edge(clk_tb) ) then
                     case t is
-                        when 0 => init_tb <= "1010110011100001";
-			when 1 => rst_tb <= '1';
-			when 2 => sel_tb <= '1';
+                        when 0 => lfsr_i_tb <= "1010110011100001";
+			            when 1 => rst_n_tb <= '1';
+			            when 2 => en_tb <= '1';
                         when others => null;
                         
                     end case;

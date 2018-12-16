@@ -1,16 +1,18 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity dfc_tb is
-end dfc_tb;
+entity dff_en_tb is
+end dff_en_tb;
 
-architecture testbench of dfc_tb is
-    component dfc is
+architecture testbench of dff_en_tb is
+    component dff_en is
         port(
+            a : in std_logic;
             d : in std_logic;
             q : out std_logic;
+            en : in std_logic;
             clk : in std_logic;
-            rst : in std_logic
+            rst_n : in std_logic
         );
     end component;
     
@@ -20,10 +22,12 @@ architecture testbench of dfc_tb is
     
     -- signals declaration
     signal clk_tb : std_logic := '0';
-    signal rst_tb : std_logic := '1';
+    signal rst_n_tb : std_logic := '1';
     signal stop_simulation : std_logic := '1';
+    signal a_tb : std_logic := '0';
     signal d_tb : std_logic;
     signal q_tb : std_logic;
+    signal en_tb : std_logic := '0';
     
     begin
         -- clk variation
@@ -31,26 +35,29 @@ architecture testbench of dfc_tb is
         -- end simulation
         stop_simulation <= '0' after T_SIM;
         
-        test_dfc: dfc
+        test_dff_en: dff_en
             port map(
+                a => a_tb,
                 d => d_tb,
                 q => q_tb,
+                en => en_tb,
                 clk => clk_tb,
-                rst => rst_tb
+                rst_n => rst_n_tb
             );
             
-        input_process: process(clk_tb, rst_tb)
+        input_process: process(clk_tb, rst_n_tb)
             variable t : natural := 0;
             
             begin
-                if(rising_edge(clk_tb) ) then
+                if(rising_edge(clk_tb)) then
                     case t is
-                        when 0 => d_tb <= '0';
-                        when 1 => d_tb <= '1';
-                        when 2 => d_tb <= '0';
-                        when 3 => d_tb <= '1';
-                        when 4 => d_tb <= '0';
-                        when 5 => d_tb <= '1';
+                        when 0 => en_tb <= '1';
+                        when 1 => d_tb <= '0';
+                        when 2 => d_tb <= '1';
+                        when 3 => d_tb <= '0';
+                        when 4 => d_tb <= '1';
+                        when 5 => d_tb <= '0';
+                        when 6 => d_tb <= '1';
                         
                         when others => null;
                         

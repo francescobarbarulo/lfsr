@@ -34,8 +34,9 @@ architecture struct of lfsr is
                                 a => lfsr_i(i);
                             	d => state(i),
                             	q => state(i + 1),
+                                en => en,
                             	clk => clk,
-                            	rst => rst
+                            	rst_n => rst_n
                         	);
     	end generate;
 
