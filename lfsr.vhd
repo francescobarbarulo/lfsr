@@ -25,22 +25,22 @@ architecture struct of lfsr is
     end component dff_en;
     
     -- signals
-    signal state : std_logic_vector(N_bit downto 0);
+    signal d_i : std_logic_vector(N_bit downto 0);
     
     begin
     	-- generation of N instances of the dfc
     	dff_en_N_gen: for i in 0 to N_bit - 1 generate
         	i_dff_en: dff_en port map(
                                 a => lfsr_i(i),
-                            	d => state(i),
-                            	q => state(i + 1),
+                            	d => d_i(i + 1),
+                            	q => d_i(i),
                                 en => en,
                             	clk => clk,
                             	rst_n => rst_n
                         	);
     	end generate;
 
-    lfsr_o(N_bit - 1 downto 0) <= state(N_bit downto 1);
-    state(0) <= state(16) xor state(14) xor state(13) xor state(11);
+    lfsr_o(N_bit - 1 downto 0) <= d_i(N_bit - 1 downto 0);
+    d_i(16) <= d_i(0) xor d_i(2) xor d_i(3) xor d_i(5);
     
 end struct;
