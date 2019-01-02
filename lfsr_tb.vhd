@@ -8,25 +8,43 @@ architecture testbench of lfsr_tb is
     component lfsr is
         generic(N_bit : integer);
         port(
+            -- Input of the lfsr
             lfsr_i : in std_logic_vector(N_bit - 1 downto 0);
+            -- Output of the lfsr
             lfsr_o : out std_logic_vector(N_bit - 1 downto 0);
+            -- Enable input
             en : in std_logic;
+            -- Clock
             clk : in std_logic;
+            -- Active low reset
             rst_n : in std_logic
         );
     end component;
     
+    --------------------------------------------------------------
     -- constant declaration
+    --------------------------------------------------------------
+    -- Clock period
     constant T_CLK : time := 100 ns;
+    -- Simulation time
     constant T_SIM  : time := 1000 ns;
-    constant N_bit : integer := 16;
+    -- Number of bits of the lfsr
+    constant N : integer := 16;
     
+    --------------------------------------------------------------
     -- signals declaration
+    --------------------------------------------------------------
+    -- clk signal initilized to '0'
     signal clk_tb : std_logic := '0';
-    signal rst_n_tb : std_logic := '0';
+    -- rst_n signal initialized to '1'
+    signal rst_n_tb : std_logic := '1';
+    -- signal to stop the simulation
     signal stop_simulation : std_logic := '1';
+    -- input of the lfsr
     signal lfsr_i_tb : std_logic_vector(N_bit - 1 downto 0);
+    -- output of the lfsr
     signal lfsr_o_tb : std_logic_vector(N_bit - 1 downto 0);
+    -- enable signal
     signal en_tb : std_logic := '0';
     
     begin
@@ -36,7 +54,7 @@ architecture testbench of lfsr_tb is
         stop_simulation <= '0' after T_SIM;
         
         test_lfsr: lfsr
-            generic map(N_bit => 16)
+            generic map(N_bit => N)
             port map(
                 lfsr_i => lfsr_i_tb,
                 lfsr_o => lfsr_o_tb,
@@ -49,11 +67,11 @@ architecture testbench of lfsr_tb is
             variable t : natural := 0;
             
             begin
-                if(rising_edge(clk_tb) ) then
+                if(rising_edge(clk_tb)) then
                     case t is
-                        when 0 => lfsr_i_tb <= "1010110011100001";
+                        when 0 => lfsr_i_tb <= "1010110011100001"; -- 0xACE1
 			            when 1 => rst_n_tb <= '1';
-			            when 5 => en_tb <= '1';
+			            when 3 => en_tb <= '1';
                         when others => null;
                         
                     end case;
