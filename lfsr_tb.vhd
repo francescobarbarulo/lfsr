@@ -21,9 +21,9 @@ architecture testbench of lfsr_tb is
         );
     end component;
     
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- constant declaration
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- Clock period
     constant T_CLK : time := 100 ns;
     -- Simulation time
@@ -31,9 +31,9 @@ architecture testbench of lfsr_tb is
     -- Number of bits of the lfsr
     constant N : integer := 16;
     
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- signals declaration
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- clk signal initilized to '0'
     signal clk_tb : std_logic := '0';
     -- rst_n signal initialized to '0'
@@ -49,7 +49,7 @@ architecture testbench of lfsr_tb is
     
     begin
         -- clk variation
-        clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK / 2;
+        clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK/2;
         -- end simulation
         stop_simulation <= '0' after T_SIM;
         
@@ -58,7 +58,7 @@ architecture testbench of lfsr_tb is
             port map(
                 lfsr_i => lfsr_i_tb,
                 lfsr_o => lfsr_o_tb,
-		en => en_tb,
+                en => en_tb,
                 clk => clk_tb,
                 rst_n => rst_n_tb
             );
@@ -69,9 +69,11 @@ architecture testbench of lfsr_tb is
             begin
                 if(rising_edge(clk_tb)) then
                     case t is
-                        when 0 => lfsr_i_tb <= "1010110011100001"; -- 0xACE1
-				  rst_n_tb <= '1';
-			when 1 => en_tb <= '1';
+                        when 0 => rst_n_tb <= '1';
+                                  -- seed = 0xACE1 
+                                  lfsr_i_tb <= "1010110011100001";   
+                        when 1 => en_tb <= '1';
+                        
                         when others => null;
                         
                     end case;

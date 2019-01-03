@@ -5,9 +5,9 @@ entity dff_en_tb is
 end dff_en_tb;
 
 architecture testbench of dff_en_tb is
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- components declaration
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     component dff_en is
         port(
             -- Input of the dff_en
@@ -25,17 +25,18 @@ architecture testbench of dff_en_tb is
         );
     end component;
     
-    --------------------------------------------------------------
+    
+    -----------------------------------------------------------
     -- constant declaration
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- Clock period
     constant T_CLK : time := 100 ns;
     -- Simulation time
     constant T_SIM  : time := 1000 ns;
     
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- signals declaration
-    --------------------------------------------------------------
+    -----------------------------------------------------------
     -- clk signal initilized to '0'
     signal clk_tb : std_logic := '0';
     -- rst_n signal initialized to '1'
@@ -51,7 +52,7 @@ architecture testbench of dff_en_tb is
     
     begin
         -- clk variation
-        clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK / 2;
+        clk_tb <= (not(clk_tb) and stop_simulation) after T_CLK/2;
         -- end simulation
         stop_simulation <= '0' after T_SIM;
         
