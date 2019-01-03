@@ -38,13 +38,13 @@ architecture testbench of dff_en_tb is
     --------------------------------------------------------------
     -- clk signal initilized to '0'
     signal clk_tb : std_logic := '0';
-    -- rst_n signal initialized to '1'
-    signal rst_n_tb : std_logic := '1';
+    -- rst_n signal initialized to '0'
+    signal rst_n_tb : std_logic := '0';
     -- signal to stop the simulation
     signal stop_simulation : std_logic := '1';
     -- input signals
-    signal a_tb : std_logic := '0';
-    signal d_tb : std_logic := '1';
+    signal a_tb : std_logic := '1';
+    signal d_tb : std_logic := '0';
     signal en_tb : std_logic := '0';
     -- output signal
     signal q_tb : std_logic;
@@ -71,15 +71,16 @@ architecture testbench of dff_en_tb is
             begin
                 if(rising_edge(clk_tb)) then
                     case t is
+			when 0 => rst_n_tb <= '1';
                         -- dff_en loaded with the value of a
                         when 1 => en_tb <= '1';
                         -- now it should act as a standard dff
-                        when 2 => d_tb <= '0';
-                        when 3 => d_tb <= '1';
-                        when 4 => d_tb <= '0';
-                        when 5 => d_tb <= '1';
-                        when 6 => d_tb <= '0';
-                        when 7 => d_tb <= '1';
+                        when 2 => d_tb <= '1';
+                        when 3 => d_tb <= '0';
+                        when 4 => d_tb <= '1';
+                        when 5 => d_tb <= '0';
+                        when 6 => d_tb <= '1';
+                        when 7 => d_tb <= '0';
                         
                         when others => null;
                         
