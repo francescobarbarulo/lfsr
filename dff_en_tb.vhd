@@ -72,7 +72,7 @@ architecture testbench of dff_en_tb is
             begin
                 if(rising_edge(clk_tb)) then
                     case t is
-			when 0 => rst_n_tb <= '1';
+                        when 0 => rst_n_tb <= '1';
                         -- dff_en loaded with the value of a
                         when 1 => en_tb <= '1';
                         -- now it should act as a standard dff

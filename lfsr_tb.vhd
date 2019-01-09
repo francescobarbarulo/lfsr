@@ -40,8 +40,8 @@ architecture testbench of lfsr_tb is
     signal rst_n_tb : std_logic := '0';
     -- signal to stop the simulation
     signal stop_simulation : std_logic := '1';
-    -- input of the lfsr
-    signal lfsr_i_tb : std_logic_vector(N - 1 downto 0);
+    -- input of the lfsr (0xACE1)
+    signal lfsr_i_tb : std_logic_vector(N - 1 downto 0) := "1010110011100001";
     -- output of the lfsr
     signal lfsr_o_tb : std_logic_vector(N - 1 downto 0);
     -- enable signal
@@ -69,11 +69,8 @@ architecture testbench of lfsr_tb is
             begin
                 if(rising_edge(clk_tb)) then
                     case t is
-                        when 0 => rst_n_tb <= '1';
-                                  -- seed = 0xACE1 
-                                  lfsr_i_tb <= "1010110011100001";   
+                        when 0 => rst_n_tb <= '1';  
                         when 1 => en_tb <= '1';
-                        
                         when others => null;
                         
                     end case;
