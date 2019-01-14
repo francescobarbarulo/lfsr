@@ -8,7 +8,7 @@
 \usepackage{verbatim}
 \usepackage{listings}
 \usepackage{color}
-\usepackage{url}
+\usepackage[hyphens]{url}
 \usepackage[bookmarks]{hyperref}
 
 \definecolor{gray}{rgb}{0.95,0.95,0.95}
@@ -101,6 +101,8 @@ Below there is a C code example of the 16-bit maximal-period Galois LFSR represe
     \label{fig:lfsr-g16}
 \end{figure}
 
+\newpage
+
 \section{Applications}
 LFSRs can be implemented in hardware, and this makes them useful in applications \cite{lfsr} that require a very fast generation of a pseudo-random sequence.
 
@@ -172,8 +174,8 @@ Below is the VHDL of the \texttt{dff\_en} entity according to Figure~\ref{fig:df
 
 \lstinputlisting[language=VHDL, linerange={4-39}, caption={Dff\_en VHDL}, label={lst:dff-en-vhdl}, captionpos=b]{../dff_en.vhd}
 
-\subsection{Implementation}
-For the overall implementation of the LFSR has been chosen the Fibonacci one, which is explained in Figure~\ref{fig:lfsr}. The \texttt{dff\_en} are placed in serial, however they can be loaded in parallel assigning \texttt{lfsr\_i(i)} to \texttt{a} input of the i-th \texttt{dff\_en}.
+\subsection{LFSR entity}
+As it is explained in Figure~\ref{fig:lfsr}, for the overall implementation of the LFSR has been chosen the Fibonacci architecture, which is the conventional one. The \texttt{dff\_en} are placed in serial, however they can be loaded in parallel assigning \texttt{lfsr\_i(i)} to \texttt{a} input of the i-th \texttt{dff\_en}.
 
 \begin{figure}[h]
     \centering
@@ -261,7 +263,7 @@ The logic synthesis has been done on Xilinx Vivado Design Suite in an automatic 
     \label{fig:elaborated-design}
 \end{figure}
 
-Then, we have launched the synthesis with clock constraint equal to 8ns (125MHz). At the end of the synthesis the following warning came up: \texttt{[Constraints 18-5210] No constraint will be written out.} According to the Xilinx Forum this warning can be safely ignored.
+Then, we have launched the synthesis with clock constraint equal to 8ns (125MHz). At the end of the synthesis the following warning came up: \texttt{[Constraints 18-5210] No constraint will be written out.} According to the Xilinx Forum\footnote{\url{https://forums.xilinx.com/t5/Synthesis/Meaning-of-synthesis-warning-Constraints-18-5210-No-constraint/m-p/881007}} this warning can be safely ignored.
 
 \subsection{Maximum clock frequency and critical path}
 Timing results are useful to check whether the $ T_{sup} $ and $ T_{hold} $ rules are respected:
@@ -324,9 +326,9 @@ The path with the worst slack time goes from \textit{dff\_en\_2} to \textit{dff\
 
 Some warnings are thrown:
 \begin{itemize}
-    \item \texttt{[Drc 23-20] Rule violation (NSTD-1) Unspecified I/O Standard - 35 out of 35 logical ports use I/O standard (IOSTANDARD) value 'DEFAULT', instead of a user assigned specific value. [...]}
-    \item \texttt{[Drc 23-20] Rule violation (UCIO-1) Unconstrained Logical Port - 35 out of 35 logical ports have no user assigned specific location constraint (LOC). [...]}
-    \item \texttt{[ZPS7-1] The PS7 cell must be used in this Zynq design in order to enable correct default configuration.}
+    \item \texttt{[Drc 23-20] Rule violation (NSTD-1) Unspecified I/O Standard - 35 out of 35 logical ports use I/O standard (IOSTANDARD) value 'DEFAULT', instead of a user assigned specific value. [...]}\footnote{\url{https://www.xilinx.com/support/answers/56354.html}}
+    \item \texttt{[Drc 23-20] Rule violation (UCIO-1) Unconstrained Logical Port - 35 out of 35 logical ports have no user assigned specific location constraint (LOC). [...]}\footnote{\url{https://www.xilinx.com/support/answers/59742.html}}
+    \item \texttt{[ZPS7-1] The PS7 cell must be used in this Zynq design in order to enable correct default configuration.}\footnote{\url{https://forums.xilinx.com/t5/Welcome-Join/How-to-instantiate-the-PS7-block/m-p/333953}}
 \end{itemize}
 
 The first two warnings notify that I/O pins have not been assigned to the physical ones. The last one refers to the ARM Processor environment, which is out of our scopes.
